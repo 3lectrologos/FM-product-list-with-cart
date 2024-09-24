@@ -3,6 +3,20 @@ export default {
   darkMode: ['class'],
   content: ['./src/**/*.{js,jsx,ts,tsx}'],
   theme: {
+    colors: {
+      red: '#C73B0F',
+      green: '#1EA575',
+      black: '#000000',
+      white: '#FFFFFF',
+      rose: {
+        50: '#FCF8F6',
+        100: '#F5EEEC',
+        300: '#CAAFA7',
+        400: '#AD8A85',
+        500: '#87635A',
+        900: '#260F08',
+      },
+    },
     extend: {
       borderRadius: {
         lg: 'var(--radius)',
