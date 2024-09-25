@@ -1,20 +1,44 @@
-import { Item } from '@/App.tsx'
+import { CartItem, Item } from '@/App.tsx'
 import { Button } from '@/components/ui/button.tsx'
 import { cn } from '@/lib/utils.ts'
 
-export default function ItemGrid({ items }: { items: Item[] }) {
+type ItemGridProps = {
+  items: Item[]
+  cart: CartItem[]
+  addToCart: (item: Item) => void
+  removeFromCart: (item: Item) => void
+}
+
+export default function ItemGrid({
+  items,
+  cart,
+  addToCart,
+  removeFromCart,
+}: ItemGridProps) {
   return (
     <ul className="space-y-6">
       {items.map((item) => (
         <li key={item.name}>
-          <ItemDisplay item={item} />
+          <ItemDisplay
+            item={item}
+            quantity={cart.find((it) => it.name === item.name)?.quantity ?? 0}
+            onAdd={() => addToCart(item)}
+            onRemove={() => removeFromCart(item)}
+          />
         </li>
       ))}
     </ul>
   )
 }
 
-function ItemDisplay({ item }: { item: Item }) {
+type ItemDisplayProps = {
+  item: Item
+  quantity: number
+  onAdd: () => void
+  onRemove: () => void
+}
+
+function ItemDisplay({ item, quantity, onAdd, onRemove }: ItemDisplayProps) {
   return (
     <div className="-space-y-1.5">
       <div className="flex flex-col items-center">
@@ -24,7 +48,11 @@ function ItemDisplay({ item }: { item: Item }) {
             alt={item.name}
           />
         </div>
-        <AddToCartButton />
+        <AddToCartButton
+          quantity={quantity}
+          onAdd={onAdd}
+          onRemove={onRemove}
+        />
       </div>
       <div className="flex flex-col gap-y-1">
         <span className="text-rose-500 text-[14px] leading-[normal]">
@@ -41,13 +69,42 @@ function ItemDisplay({ item }: { item: Item }) {
   )
 }
 
-function AddToCartButton() {
+function AddToCartButton({
+  quantity,
+  onAdd,
+  onRemove,
+}: {
+  quantity: number
+  onAdd: () => void
+  onRemove: () => void
+}) {
+  if (quantity > 0) {
+    return (
+      <div
+        className={cn(
+          'w-40 h-11 bg-red text-white rounded-full',
+          'flex items-center justify-between px-3',
+          '-translate-y-1/2'
+        )}
+      >
+        <SmallButton onClick={onRemove}>
+          <MinusIcon />
+        </SmallButton>
+        <span className="text-[14px] font-semibold">{quantity}</span>
+        <SmallButton onClick={onAdd}>
+          <PlusIcon />
+        </SmallButton>
+      </div>
+    )
+  }
+
   return (
     <Button
       className={cn(
         'w-40 h-11 bg-white border border-rose-400 text-[16px] font-semibold rounded-full',
         '-translate-y-1/2'
       )}
+      onClick={onAdd}
     >
       <div className="flex gap-x-2">
         <CartIcon />
@@ -55,6 +112,23 @@ function AddToCartButton() {
           Add to Cart
         </span>
       </div>
+    </Button>
+  )
+}
+
+function SmallButton({
+  children,
+  onClick,
+}: {
+  children: React.ReactNode
+  onClick: () => void
+}) {
+  return (
+    <Button
+      className="w-5 h-5 rounded-full border border-white px-0 py-0"
+      onClick={onClick}
+    >
+      {children}
     </Button>
   )
 }
@@ -77,6 +151,37 @@ function CartIcon() {
           <path fill="#fff" d="M.333 0h20v20h-20z" />
         </clipPath>
       </defs>
+    </svg>
+  )
+}
+
+function PlusIcon() {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="10"
+      height="10"
+      fill="none"
+      viewBox="0 0 10 10"
+    >
+      <path
+        fill="#fff"
+        d="M10 4.375H5.625V0h-1.25v4.375H0v1.25h4.375V10h1.25V5.625H10v-1.25Z"
+      />
+    </svg>
+  )
+}
+
+function MinusIcon() {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="10"
+      height="2"
+      fill="none"
+      viewBox="0 0 10 2"
+    >
+      <path fill="#fff" d="M0 .375h10v1.25H0V.375Z" />
     </svg>
   )
 }

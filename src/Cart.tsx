@@ -1,12 +1,10 @@
-import { useState } from 'react'
+import { CartItem } from '@/App.tsx'
 
-export default function Cart() {
-  const [cart, setCart] = useState([])
-
+export default function Cart({ cart }: { cart: CartItem[] }) {
   return (
     <div className="bg-white rounded-[12px] space-y-6 p-6">
       <span className="text-red text-[24px] font-bold leading-[normal]">
-        Your Cart ({cart.length})
+        Your Cart ({cart.reduce((acc, item) => acc + item.quantity, 0)})
       </span>
 
       {cart.length === 0 && (
