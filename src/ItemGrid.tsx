@@ -6,7 +6,7 @@ type ItemGridProps = {
   items: Item[]
   cart: CartItem[]
   addToCart: (item: Item) => void
-  removeFromCart: (item: Item) => void
+  removeFromCart: (name: string) => void
 }
 
 export default function ItemGrid({
@@ -21,9 +21,11 @@ export default function ItemGrid({
         <li key={item.name}>
           <ItemDisplay
             item={item}
-            quantity={cart.find((it) => it.name === item.name)?.quantity ?? 0}
+            quantity={
+              cart.find((it) => it.item.name === item.name)?.quantity ?? 0
+            }
             onAdd={() => addToCart(item)}
-            onRemove={() => removeFromCart(item)}
+            onRemove={() => removeFromCart(item.name)}
           />
         </li>
       ))}

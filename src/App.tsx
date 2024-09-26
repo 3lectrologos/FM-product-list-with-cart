@@ -16,7 +16,7 @@ export type Item = {
 }
 
 export type CartItem = {
-  name: string
+  item: Item
   quantity: number
 }
 
@@ -24,33 +24,39 @@ function App() {
   const [cart, setCart] = useState<CartItem[]>([])
 
   const addToCart = (item: Item) => {
-    const existingItem = cart.find((cartItem) => cartItem.name === item.name)
+    const existingItem = cart.find(
+      (cartItem) => cartItem.item.name === item.name
+    )
     if (existingItem) {
       setCart(
         cart.map((cartItem) =>
-          cartItem.name === item.name
+          cartItem.item.name === item.name
             ? { ...cartItem, quantity: cartItem.quantity + 1 }
             : cartItem
         )
       )
     } else {
-      setCart([...cart, { name: item.name, quantity: 1 }])
+      setCart([...cart, { item, quantity: 1 }])
     }
   }
 
-  const removeFromCart = (item: Item) => {
-    const existingItem = cart.find((cartItem) => cartItem.name === item.name)
+  const removeFromCart = (name: string) => {
+    const existingItem = cart.find((cartItem) => cartItem.item.name === name)
     if (existingItem && existingItem.quantity > 1) {
       setCart(
         cart.map((cartItem) =>
-          cartItem.name === item.name
+          cartItem.item.name === name
             ? { ...cartItem, quantity: cartItem.quantity - 1 }
             : cartItem
         )
       )
     } else {
-      setCart(cart.filter((cartItem) => cartItem.name !== item.name))
+      setCart(cart.filter((cartItem) => cartItem.item.name !== name))
     }
+  }
+
+  const clearFromCart = (name: string) => {
+    setCart(cart.filter((cartItem) => cartItem.item.name !== name))
   }
 
   return (
@@ -65,7 +71,7 @@ function App() {
           addToCart={addToCart}
           removeFromCart={removeFromCart}
         />
-        <Cart cart={cart} />
+        <Cart cart={cart} clearFromCart={clearFromCart} />
       </div>
     </div>
   )
