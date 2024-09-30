@@ -1,37 +1,80 @@
 import { CartItem } from '@/App.tsx'
 import { Button } from '@/components/ui/button.tsx'
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '@/components/ui/dialog.tsx'
+import * as VisuallyHidden from '@radix-ui/react-visually-hidden'
+import { ReactNode, useState } from 'react'
 
 export default function ConfirmationDialog({
   cart,
   startNewOrder,
+  children,
 }: {
   cart: CartItem[]
   startNewOrder: () => void
+  children: ReactNode
 }) {
+  const [isOpen, setIsOpen] = useState(false)
+
+  const handleStartNewOrder = async () => {
+    setIsOpen(false)
+    setTimeout(() => startNewOrder(), 100)
+  }
+
   return (
-    <div className="pt-10 pb-6 px-6 space-y-8">
-      <div className="flex flex-col space-y-6">
-        <CheckIcon />
-        <div className="flex flex-col space-y-2">
-          <span className="text-[40px] text-rose-900 font-bold leading-[120%]">
-            Order Confirmed
-          </span>
-          <span className="text-[16px] text-rose-500 leading-[normal]">
-            We hope you enjoy your food!
-          </span>
+    <Dialog open={isOpen}>
+      <DialogTrigger onClick={() => setIsOpen(true)} asChild>
+        {children}
+      </DialogTrigger>
+      <VisuallyHidden.Root>
+        <DialogHeader>
+          <DialogTitle>Order Confirmation</DialogTitle>
+          <DialogDescription>We hope you enjoy your food!</DialogDescription>
+        </DialogHeader>
+      </VisuallyHidden.Root>
+      <DialogContent
+        className="p-0"
+        onPointerDownOutside={(e) => {
+          e.preventDefault()
+        }}
+        onEscapeKeyDown={(e) => {
+          e.preventDefault()
+        }}
+      >
+        <div className="pt-10 pb-6 px-6 space-y-8">
+          <div className="flex flex-col space-y-6">
+            <CheckIcon />
+            <div className="flex flex-col space-y-2">
+              <span className="text-[40px] text-rose-900 font-bold leading-[120%]">
+                Order Confirmed
+              </span>
+              <span className="text-[16px] text-rose-500 leading-[normal]">
+                We hope you enjoy your food!
+              </span>
+            </div>
+          </div>
+          <ItemInfoList cart={cart} />
+          <DialogClose asChild>
+            <Button className="w-full" onClick={handleStartNewOrder}>
+              Start New Order
+            </Button>
+          </DialogClose>
         </div>
-      </div>
-      <ItemInfoList cart={cart} />
-      <Button className="w-full" onClick={startNewOrder}>
-        Start New Order
-      </Button>
-    </div>
+      </DialogContent>
+    </Dialog>
   )
 }
 
 function ItemInfoList({ cart }: { cart: CartItem[] }) {
   return (
-    <div className="p-6 space-y-6 bg-rose-50">
+    <div className="p-6 space-y-6 bg-rose-50 rounded-[8px]">
       <ul className="space-y-4">
         {cart.map((cartItem, index) => (
           <li key={cartItem.item.name}>

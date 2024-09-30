@@ -1,11 +1,7 @@
 import { CartItem } from '@/App.tsx'
 import { Button } from '@/components/ui/button.tsx'
-import {
-  Dialog,
-  DialogContent,
-  DialogTrigger,
-} from '@/components/ui/dialog.tsx'
 import ConfirmationDialog from '@/ConfirmationDialog.tsx'
+import { cn } from '@/lib/utils.ts'
 
 export default function Cart({
   cart,
@@ -66,25 +62,14 @@ export default function Cart({
               delivery
             </span>
           </div>
-
-          <Dialog>
-            <DialogTrigger asChild>
-              <Button className="w-full">Confirm Order</Button>
-            </DialogTrigger>
-            <DialogContent
-              className="p-0"
-              onPointerDownOutside={(e) => {
-                e.preventDefault()
-              }}
-              onEscapeKeyDown={(e) => {
-                e.preventDefault()
-              }}
-            >
-              <ConfirmationDialog cart={cart} startNewOrder={startNewOrder} />
-            </DialogContent>
-          </Dialog>
         </>
       )}
+
+      <ConfirmationDialog cart={cart} startNewOrder={startNewOrder}>
+        <Button className={cn('w-full hidden', cart.length > 0 && 'block')}>
+          Confirm Order
+        </Button>
+      </ConfirmationDialog>
     </div>
   )
 }
