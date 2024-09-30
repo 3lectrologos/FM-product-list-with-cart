@@ -59,6 +59,10 @@ function App() {
     setCart(cart.filter((cartItem) => cartItem.item.name !== name))
   }
 
+  const startNewOrder = () => {
+    setCart([])
+  }
+
   return (
     <div className="min-h-dvh bg-rose-50 flex flex-col items-center">
       <div className="p-6 space-y-8">
@@ -71,7 +75,11 @@ function App() {
           addToCart={addToCart}
           removeFromCart={removeFromCart}
         />
-        <Cart cart={cart} clearFromCart={clearFromCart} />
+        <Cart
+          cart={cart}
+          clearFromCart={clearFromCart}
+          startNewOrder={startNewOrder}
+        />
       </div>
     </div>
   )

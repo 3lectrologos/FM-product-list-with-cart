@@ -1,12 +1,20 @@
 import { CartItem } from '@/App.tsx'
 import { Button } from '@/components/ui/button.tsx'
+import {
+  Dialog,
+  DialogContent,
+  DialogTrigger,
+} from '@/components/ui/dialog.tsx'
+import ConfirmationDialog from '@/ConfirmationDialog.tsx'
 
 export default function Cart({
   cart,
   clearFromCart,
+  startNewOrder,
 }: {
   cart: CartItem[]
   clearFromCart: (name: string) => void
+  startNewOrder: () => void
 }) {
   return (
     <div className="bg-white rounded-[12px] space-y-6 p-6">
@@ -37,29 +45,46 @@ export default function Cart({
         ))}
       </div>
 
-      <div className="w-full h-px bg-rose-100" />
+      {cart.length > 0 && (
+        <>
+          <div className="w-full h-px bg-rose-100" />
 
-      <div className="flex justify-between items-baseline">
-        <span>Order Total</span>
-        <span className="text-[24px] text-rose-900 font-bold leading-[normal]">
-          $
-          {cart
-            .reduce((acc, item) => acc + item.quantity * item.item.price, 0)
-            .toFixed(2)}
-        </span>
-      </div>
+          <div className="flex justify-between items-baseline">
+            <span>Order Total</span>
+            <span className="text-[24px] text-rose-900 font-bold leading-[normal]">
+              $
+              {cart
+                .reduce((acc, item) => acc + item.quantity * item.item.price, 0)
+                .toFixed(2)}
+            </span>
+          </div>
 
-      <div className="h-[52px] flex space-x-2 items-center justify-center bg-rose-50 rounded-[8px]">
-        <CarbonNeutralIcon />
-        <span className="text-[14px] text-rose-900 font-normal leading-[normal]">
-          This is a <span className="font-semibold">carbon-neutral</span>{' '}
-          delivery
-        </span>
-      </div>
+          <div className="h-[52px] flex space-x-2 items-center justify-center bg-rose-50 rounded-[8px]">
+            <CarbonNeutralIcon />
+            <span className="text-[14px] text-rose-900 font-normal leading-[normal]">
+              This is a <span className="font-semibold">carbon-neutral</span>{' '}
+              delivery
+            </span>
+          </div>
 
-      <Button className="w-full h-[52px] flex justify-center items-center bg-red text-white rounded-full">
-        Confirm Order
-      </Button>
+          <Dialog>
+            <DialogTrigger asChild>
+              <Button className="w-full">Confirm Order</Button>
+            </DialogTrigger>
+            <DialogContent
+              className="p-0"
+              onPointerDownOutside={(e) => {
+                e.preventDefault()
+              }}
+              onEscapeKeyDown={(e) => {
+                e.preventDefault()
+              }}
+            >
+              <ConfirmationDialog cart={cart} startNewOrder={startNewOrder} />
+            </DialogContent>
+          </Dialog>
+        </>
+      )}
     </div>
   )
 }
@@ -90,7 +115,7 @@ function CartItemDisplay({
         </div>
       </div>
       <Button
-        className="w-[18px] h-[18px] rounded-full p-0 border border-rose-400"
+        className="w-[18px] h-[18px] rounded-full p-0 border border-rose-400 bg-white"
         onClick={clearFromCart}
       >
         <RemoveItemIcon />
