@@ -65,7 +65,7 @@ function App() {
 
   return (
     <div className="min-h-dvh bg-rose-50 flex flex-col items-center">
-      <div className="p-6 space-y-8">
+      <div className="p-6 space-y-8 tablet:p-10">
         <h1 className="text-rose-900 text-[40px] font-bold leading-[1.2]">
           Desserts
         </h1>

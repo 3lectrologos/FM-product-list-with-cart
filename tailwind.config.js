@@ -65,6 +65,10 @@ export default {
           5: 'hsl(var(--chart-5))',
         },
       },
+      screens: {
+        tablet: '640px',
+        desktop: '1024px',
+      },
     },
   },
   plugins: [require('tailwindcss-animate')],

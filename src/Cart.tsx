@@ -2,6 +2,7 @@ import { CartItem } from '@/App.tsx'
 import { Button } from '@/components/ui/button.tsx'
 import ConfirmationDialog from '@/ConfirmationDialog.tsx'
 import { cn } from '@/lib/utils.ts'
+import { motion } from 'framer-motion'
 
 export default function Cart({
   cart,
@@ -13,12 +14,18 @@ export default function Cart({
   startNewOrder: () => void
 }) {
   return (
-    <div className="bg-white rounded-[12px] space-y-6 p-6">
-      <span className="text-red text-[24px] font-bold leading-[normal]">
+    <motion.div
+      layout="position"
+      className="bg-white rounded-[12px] space-y-6 p-6"
+    >
+      <motion.div
+        layout="position"
+        className="text-red text-[24px] font-bold leading-[normal]"
+      >
         Your Cart ({cart.reduce((acc, item) => acc + item.quantity, 0)})
-      </span>
+      </motion.div>
 
-      <div className="">
+      <motion.div className="">
         {cart.length === 0 && (
           <div className="flex flex-col items-center space-y-4 py-4">
             <EmptyCartIcon />
@@ -29,7 +36,7 @@ export default function Cart({
         )}
 
         {cart.map((cartItem, index) => (
-          <div key={cartItem.item.name}>
+          <motion.div key={cartItem.item.name}>
             <CartItemDisplay
               cartItem={cartItem}
               clearFromCart={() => clearFromCart(cartItem.item.name)}
@@ -37,15 +44,15 @@ export default function Cart({
             {index < cart.length - 1 && (
               <div className="w-full h-px bg-rose-100 my-4" />
             )}
-          </div>
+          </motion.div>
         ))}
-      </div>
+      </motion.div>
 
       {cart.length > 0 && (
         <>
           <div className="w-full h-px bg-rose-100" />
 
-          <div className="flex justify-between items-baseline">
+          <motion.div className="flex justify-between items-baseline">
             <span>Order Total</span>
             <span className="text-[24px] text-rose-900 font-bold leading-[normal]">
               $
@@ -53,15 +60,15 @@ export default function Cart({
                 .reduce((acc, item) => acc + item.quantity * item.item.price, 0)
                 .toFixed(2)}
             </span>
-          </div>
+          </motion.div>
 
-          <div className="h-[52px] flex space-x-2 items-center justify-center bg-rose-50 rounded-[8px]">
+          <motion.div className="h-[52px] flex space-x-2 items-center justify-center bg-rose-50 rounded-[8px]">
             <CarbonNeutralIcon />
             <span className="text-[14px] text-rose-900 font-normal leading-[normal]">
               This is a <span className="font-semibold">carbon-neutral</span>{' '}
               delivery
             </span>
-          </div>
+          </motion.div>
         </>
       )}
 
@@ -70,7 +77,7 @@ export default function Cart({
           Confirm Order
         </Button>
       </ConfirmationDialog>
-    </div>
+    </motion.div>
   )
 }
 

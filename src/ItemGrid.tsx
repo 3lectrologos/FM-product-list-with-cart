@@ -16,7 +16,12 @@ export default function ItemGrid({
   removeFromCart,
 }: ItemGridProps) {
   return (
-    <ul className="space-y-6">
+    <ul
+      className={cn(
+        'space-y-6',
+        'tablet:grid tablet:grid-cols-3 tablet:gap-x-6 tablet:gap-y-8 tablet:space-y-0'
+      )}
+    >
       {items.map((item) => (
         <li key={item.name}>
           <ItemDisplay
@@ -44,11 +49,26 @@ function ItemDisplay({ item, quantity, onAdd, onRemove }: ItemDisplayProps) {
   return (
     <div className="-space-y-1.5">
       <div className="flex flex-col items-center">
-        <div className={'rounded-[8px] overflow-hidden'}>
-          <img
-            src={new URL(item.image.mobile, import.meta.url).href}
-            alt={item.name}
-          />
+        <div
+          className={cn(
+            'rounded-[8px] overflow-hidden border-2 border-red border-opacity-0 transition-all',
+            quantity > 0 && 'border-opacity-100'
+          )}
+        >
+          <picture>
+            <source
+              srcSet={new URL(item.image.desktop, import.meta.url).href}
+              media="(min-width: 1024px)"
+            />
+            <source
+              srcSet={new URL(item.image.tablet, import.meta.url).href}
+              media="(min-width: 640px)"
+            />
+            <img
+              src={new URL(item.image.mobile, import.meta.url).href}
+              alt={item.name}
+            />
+          </picture>
         </div>
         <AddToCartButton
           quantity={quantity}
