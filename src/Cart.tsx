@@ -8,15 +8,17 @@ export default function Cart({
   cart,
   clearFromCart,
   startNewOrder,
+  className,
 }: {
   cart: CartItem[]
   clearFromCart: (name: string) => void
   startNewOrder: () => void
+  className?: string
 }) {
   return (
     <motion.div
       layout="position"
-      className="bg-white rounded-[12px] space-y-6 p-6"
+      className={cn('h-fit bg-white rounded-[12px] space-y-6 p-6', className)}
     >
       <motion.div
         layout="position"

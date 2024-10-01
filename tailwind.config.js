@@ -66,8 +66,8 @@ export default {
         },
       },
       screens: {
-        tablet: '640px',
-        desktop: '1024px',
+        tablet: '768px',
+        desktop: '1440px',
       },
     },
   },

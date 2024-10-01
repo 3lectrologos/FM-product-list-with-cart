@@ -65,17 +65,20 @@ function App() {
 
   return (
     <div className="min-h-dvh bg-rose-50 flex flex-col items-center">
-      <div className="p-6 space-y-8 tablet:p-10">
-        <h1 className="text-rose-900 text-[40px] font-bold leading-[1.2]">
-          Desserts
-        </h1>
-        <ItemGrid
-          items={itemList as Item[]}
-          cart={cart}
-          addToCart={addToCart}
-          removeFromCart={removeFromCart}
-        />
+      <div className="p-6 space-y-8 tablet:p-10 desktop:py-[88px] desktop:px-[112px] desktop:flex desktop:gap-x-8">
+        <div className="space-y-8">
+          <h1 className="text-rose-900 text-[40px] font-bold leading-[1.2]">
+            Desserts
+          </h1>
+          <ItemGrid
+            items={itemList as Item[]}
+            cart={cart}
+            addToCart={addToCart}
+            removeFromCart={removeFromCart}
+          />
+        </div>
         <Cart
+          className="desktop:w-[384px] desktop:shrink-0"
           cart={cart}
           clearFromCart={clearFromCart}
           startNewOrder={startNewOrder}

@@ -52,17 +52,18 @@ function ItemDisplay({ item, quantity, onAdd, onRemove }: ItemDisplayProps) {
         <div
           className={cn(
             'rounded-[8px] overflow-hidden border-2 border-red border-opacity-0 transition-all',
-            quantity > 0 && 'border-opacity-100'
+            quantity > 0 && 'border-opacity-100',
+            'max-w-[327px]'
           )}
         >
           <picture>
             <source
               srcSet={new URL(item.image.desktop, import.meta.url).href}
-              media="(min-width: 1024px)"
+              media="(min-width: 1440px)"
             />
             <source
               srcSet={new URL(item.image.tablet, import.meta.url).href}
-              media="(min-width: 640px)"
+              media="(min-width: 768px)"
             />
             <img
               src={new URL(item.image.mobile, import.meta.url).href}
