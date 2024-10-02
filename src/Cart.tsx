@@ -76,7 +76,7 @@ export default function Cart({
       )}
 
       <ConfirmationDialog cart={cart} startNewOrder={startNewOrder}>
-        <BigButton className={cn(cart.length > 0 && 'block')}>
+        <BigButton className={cn('hidden', cart.length > 0 && 'block')}>
           Confirm Order
         </BigButton>
       </ConfirmationDialog>

@@ -115,7 +115,7 @@ function ItemInfo({ item, quantity }: CartItem) {
     <div className="w-full flex items-center justify-between gap-x-2">
       <div className="flex flex-row space-x-4">
         <img
-          src={new URL(item.image.thumbnail, import.meta.url).href}
+          src={item.image.thumbnail.split('/').slice(2).join('/')}
           alt={item.name}
           className="w-12 h-12 object-cover rounded-[4px]"
         />
