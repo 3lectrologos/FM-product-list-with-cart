@@ -58,15 +58,15 @@ function ItemDisplay({ item, quantity, onAdd, onRemove }: ItemDisplayProps) {
         >
           <picture>
             <source
-              srcSet={new URL(item.image.desktop, import.meta.url).href}
+              srcSet={item.image.desktop.split('/').slice(2).join('/')}
               media="(min-width: 1440px)"
             />
             <source
-              srcSet={new URL(item.image.tablet, import.meta.url).href}
+              srcSet={item.image.tablet.split('/').slice(2).join('/')}
               media="(min-width: 768px)"
             />
             <img
-              src={new URL(item.image.mobile, import.meta.url).href}
+              src={item.image.mobile.split('/').slice(2).join('/')}
               alt={item.name}
             />
           </picture>
