@@ -1,0 +1,1 @@
+{"root":["./src/app.tsx","./src/bigbutton.tsx","./src/cart.tsx","./src/confirmationdialog.tsx","./src/itemgrid.tsx","./src/main.tsx","./src/vite-env.d.ts","./src/components/ui/button.tsx","./src/components/ui/dialog.tsx","./src/lib/utils.ts"],"version":"5.6.2"}
