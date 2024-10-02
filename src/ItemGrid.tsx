@@ -111,11 +111,11 @@ function AddToCartButton({
         )}
       >
         <SmallButton onClick={onRemove}>
-          <MinusIcon />
+          <MinusIcon className="transition-colors fill-white group-hover:fill-red" />
         </SmallButton>
         <span className="text-[14px] font-semibold">{quantity}</span>
         <SmallButton onClick={onAdd}>
-          <PlusIcon />
+          <PlusIcon className="transition-colors fill-white group-hover:fill-red" />
         </SmallButton>
       </div>
     )
@@ -124,14 +124,15 @@ function AddToCartButton({
   return (
     <Button
       className={cn(
-        'w-40 h-11 bg-white border border-rose-400 text-[16px] font-semibold rounded-full',
-        '-translate-y-1/2'
+        'w-40 h-11 bg-white border border-rose-400 text-[16px] text-rose-900 font-semibold rounded-full',
+        '-translate-y-1/2',
+        'transition-colors hover:border-red hover:text-red'
       )}
       onClick={onAdd}
     >
       <div className="flex gap-x-2">
         <CartIcon />
-        <span className="text-rose-900 text-[14px] font-semibold leading-[normal]">
+        <span className="text-[14px] font-semibold leading-[normal]">
           Add to Cart
         </span>
       </div>
@@ -148,7 +149,10 @@ function SmallButton({
 }) {
   return (
     <Button
-      className="w-5 h-5 rounded-full border border-white px-0 py-0"
+      className={cn(
+        'w-5 h-5 rounded-full border border-white px-0 py-0',
+        'hover:bg-white group transition-colors'
+      )}
       onClick={onClick}
     >
       {children}
@@ -178,33 +182,30 @@ function CartIcon() {
   )
 }
 
-function PlusIcon() {
+function PlusIcon({ className }: { className?: string }) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       width="10"
       height="10"
-      fill="none"
       viewBox="0 0 10 10"
+      className={className}
     >
-      <path
-        fill="#fff"
-        d="M10 4.375H5.625V0h-1.25v4.375H0v1.25h4.375V10h1.25V5.625H10v-1.25Z"
-      />
+      <path d="M10 4.375H5.625V0h-1.25v4.375H0v1.25h4.375V10h1.25V5.625H10v-1.25Z" />
     </svg>
   )
 }
 
-function MinusIcon() {
+function MinusIcon({ className }: { className?: string }) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       width="10"
       height="2"
-      fill="none"
       viewBox="0 0 10 2"
+      className={className}
     >
-      <path fill="#fff" d="M0 .375h10v1.25H0V.375Z" />
+      <path d="M0 .375h10v1.25H0V.375Z" />
     </svg>
   )
 }

@@ -1,5 +1,4 @@
 import { CartItem } from '@/App.tsx'
-import { Button } from '@/components/ui/button.tsx'
 import {
   Dialog,
   DialogClose,
@@ -12,6 +11,7 @@ import {
 import * as VisuallyHidden from '@radix-ui/react-visually-hidden'
 import { ReactNode, useState } from 'react'
 import { cn } from '@/lib/utils.ts'
+import BigButton from '@/BigButton.tsx'
 
 export default function ConfirmationDialog({
   cart,
@@ -71,9 +71,7 @@ export default function ConfirmationDialog({
           </div>
           <ItemInfoList cart={cart} />
           <DialogClose asChild>
-            <Button className="w-full" onClick={handleStartNewOrder}>
-              Start New Order
-            </Button>
+            <BigButton onClick={handleStartNewOrder}>Start New Order</BigButton>
           </DialogClose>
         </div>
       </DialogContent>

@@ -3,6 +3,7 @@ import { Button } from '@/components/ui/button.tsx'
 import ConfirmationDialog from '@/ConfirmationDialog.tsx'
 import { cn } from '@/lib/utils.ts'
 import { motion } from 'framer-motion'
+import BigButton from '@/BigButton.tsx'
 
 export default function Cart({
   cart,
@@ -75,9 +76,9 @@ export default function Cart({
       )}
 
       <ConfirmationDialog cart={cart} startNewOrder={startNewOrder}>
-        <Button className={cn('w-full hidden', cart.length > 0 && 'block')}>
+        <BigButton className={cn(cart.length > 0 && 'block')}>
           Confirm Order
-        </Button>
+        </BigButton>
       </ConfirmationDialog>
     </motion.div>
   )
@@ -109,10 +110,13 @@ function CartItemDisplay({
         </div>
       </div>
       <Button
-        className="w-[18px] h-[18px] rounded-full p-0 border border-rose-400 bg-white"
+        className={cn(
+          'w-[18px] h-[18px] rounded-full p-0 border border-rose-400 bg-white',
+          'transition-colors hover:border-rose-900 group'
+        )}
         onClick={clearFromCart}
       >
-        <RemoveItemIcon />
+        <RemoveItemIcon className="transition-colors fill-rose-400 group-hover:fill-rose-900" />
       </Button>
     </div>
   )
@@ -178,19 +182,16 @@ function EmptyCartIcon() {
   )
 }
 
-function RemoveItemIcon() {
+function RemoveItemIcon({ className }: { className?: string }) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       width="10"
       height="10"
-      fill="none"
       viewBox="0 0 10 10"
+      className={className}
     >
-      <path
-        fill="#AD8A85"
-        d="M8.375 9.375 5 6 1.625 9.375l-1-1L4 5 .625 1.625l1-1L5 4 8.375.625l1 1L6 5l3.375 3.375-1 1Z"
-      />
+      <path d="M8.375 9.375 5 6 1.625 9.375l-1-1L4 5 .625 1.625l1-1L5 4 8.375.625l1 1L6 5l3.375 3.375-1 1Z" />
     </svg>
   )
 }
