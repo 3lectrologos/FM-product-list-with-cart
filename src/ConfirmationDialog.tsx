@@ -11,6 +11,7 @@ import {
 } from '@/components/ui/dialog.tsx'
 import * as VisuallyHidden from '@radix-ui/react-visually-hidden'
 import { ReactNode, useState } from 'react'
+import { cn } from '@/lib/utils.ts'
 
 export default function ConfirmationDialog({
   cart,
@@ -40,7 +41,10 @@ export default function ConfirmationDialog({
         </DialogHeader>
       </VisuallyHidden.Root>
       <DialogContent
-        className="p-0"
+        className={cn(
+          'tablet:bottom-1/2 tablet:translate-y-1/2 tablet:px-10',
+          'desktop:w-[592px] desktop:px-0'
+        )}
         onPointerDownOutside={(e) => {
           e.preventDefault()
         }}
@@ -48,7 +52,12 @@ export default function ConfirmationDialog({
           e.preventDefault()
         }}
       >
-        <div className="pt-10 pb-6 px-6 space-y-8">
+        <div
+          className={cn(
+            'bg-white pt-10 pb-6 px-6 space-y-8 tablet:p-10',
+            'rounded-t-[12px] tablet:rounded-[12px]'
+          )}
+        >
           <div className="flex flex-col space-y-6">
             <CheckIcon />
             <div className="flex flex-col space-y-2">
